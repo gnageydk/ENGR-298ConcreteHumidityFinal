@@ -1,6 +1,6 @@
 #import in any necessary python modules to use
 import scipy
-import numpy
+import numpy as np
 import math
 import statistics
 
