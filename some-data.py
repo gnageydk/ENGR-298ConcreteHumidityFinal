@@ -18,16 +18,16 @@ x = []
 # avgRHk is average relative humidity at the first hour (so this value should remain the same throughout the program)
 # k is hour one (so like might be 0:00:12 or alternatively 0:30:12)
 # Tkavg is the average temperature through the hour
-
+###
 RHFDDD = [fullFDDDRhData]
 N = len(RHFDDD)
 avgRH_list = []
 for i in range(0,6,N):
-    RHFDDDlist = pd['Value'].tolist()
+    RHFDDDlist = pd[',Value'].tolist()
     RHavg = s.mean(RHFDDDlist[i:i + 5])
     avgRH_list.append(RHavg)
 RHnFDDD = s.mean(RHFDDD[-1:-6])
-
+###
 RHFC67 = [fullFC67RhData]
 N = len(RHFC67)
 avgRH_list = []
