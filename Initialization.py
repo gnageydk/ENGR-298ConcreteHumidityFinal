@@ -1,10 +1,22 @@
 # import in any necessary python modules to use
+# if you don't have these modules, hover over the red line on the right if using pycharm to then install the package
+# in the popup that should show up -- you can also use the python packages tab at the bottom to manually install these:
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+import datetime
+
+# here is how we can convert a timestamp into a unix time
+# see https://www.geeksforgeeks.org/how-to-convert-datetime-to-unix-timestamp-in-python/amp/
+# and https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
+# for overall documentation on what everything means
+date_example = "6/20/15 12:04:01 PM"
+# %month/%day/%year %Hour:%Minute:%Seconds %pM & AM
+date_format = "%m/%d/%y %H:%M:%S %p"
+timestamp_format = datetime.datetime.strptime(date_example, date_format)
+unix_time = datetime.datetime.timestamp(timestamp_format)
 
 # we care about Sensor 2 (FC67) and Sensor 4 (FDDD)
-# initialize the datasets, define a path to each dataset so we can extract it
+# initialize the datasets, define a path to each dataset, so then we can extract it
 pathFC67_RH1 = '00000000_SpecialCase/20141221_NoRail_FC67_RH.csv'
 pathFC67_TEMP1 = '00000000_SpecialCase/20141221_NoRail_FC67_Temp.csv'
 pathFC67_RH2 = '00000000_SpecialCase/20150801_NoRail_FC67_RH.csv'
@@ -16,28 +28,37 @@ pathFDDD_TEMP = '00000000_SpecialCase/YeRail-FDDD_Temp.csv'
 
 # define the columns2 we care about, column 0 is timestamp column 2 is RH or Temp data
 columns1 = [0, 2]
-
+headers = ['Date/Time','Values']
 # FDDD temp data
-fullFDDDTempData = pd.read_csv(pathFDDD_TEMP,skiprows=20,usecols=columns1)
+fullFDDDTempData = pd.read_csv(pathFDDD_TEMP, skiprows=20, usecols=columns1)
+# create a new file of just the data we care about because dataframes are difficult to work with
+fullFDDDTempData.to_csv('FDDD_Temp_Data.csv',columns=headers)
 
 # FDDD rh data
-fullFDDDRhData = pd.read_csv(pathFDDD_RH,skiprows=20,usecols=columns1)
+fullFDDDRhData = pd.read_csv(pathFDDD_RH, skiprows=20, usecols=columns1)
+fullFDDDRhData.to_csv('FDDD_Rh_Data.csv',columns=headers)
 
 # FC67 temp data
-FC67TempData1 = pd.read_csv(pathFC67_TEMP1,skiprows=20,usecols=columns1)
-FC67TempData2 = pd.read_csv(pathFC67_TEMP2,skiprows=20,usecols=columns1)
-FC67TempData3 = pd.read_csv(pathFC67_TEMP3,skiprows=20,usecols=columns1)
+FC67TempData1 = pd.read_csv(pathFC67_TEMP1, skiprows=20, usecols=columns1)
+FC67TempData2 = pd.read_csv(pathFC67_TEMP2, skiprows=20, usecols=columns1)
+FC67TempData3 = pd.read_csv(pathFC67_TEMP3, skiprows=20, usecols=columns1)
 
 FC67TempFrames = [FC67TempData1, FC67TempData2, FC67TempData3]
 fullFC67TempData = np.concatenate(FC67TempFrames)
+# because this is a now a numpy array since we used np.concatenate, we need to use a different method to save it
+# we'll convert it back into a pandas dataframe and then save it as a csv file
+fullFC67TempDataFrame = pd.DataFrame(fullFC67TempData)
+fullFC67TempDataFrame.to_csv('FC67_Temp_Data.csv',columns=headers)
 
 # FC67 rh data
-FC67RhData1 = pd.read_csv(pathFC67_RH1,skiprows=20,usecols=columns1)
-FC67RhData2 = pd.read_csv(pathFC67_RH2,skiprows=20,usecols=columns1)
-FC67RhData3 = pd.read_csv(pathFC67_RH3,skiprows=20,usecols=columns1)
+FC67RhData1 = pd.read_csv(pathFC67_RH1, skiprows=20, usecols=columns1)
+FC67RhData2 = pd.read_csv(pathFC67_RH2, skiprows=20, usecols=columns1)
+FC67RhData3 = pd.read_csv(pathFC67_RH3, skiprows=20, usecols=columns1)
 
-FC67RhFrames = [FC67RhData1,FC67RhData2,FC67RhData3]
+FC67RhFrames = [FC67RhData1, FC67RhData2, FC67RhData3]
 fullFC67RhData = np.concatenate(FC67RhFrames)
+fullFC67RhDataFrame = pd.DataFrame(fullFC67RhData)
+fullFC67RhDataFrame.to_csv('FC67_Rh_Data.csv',columns=headers)
 
 # import rest of dataset to extract sensor 2 and sensor 4 data
 pathDATASET1 = '00000000_SpecialCase/DATALOG-retrieved_at_20141207.csv'
@@ -59,8 +80,9 @@ pathDATASET15 = '00000000_SpecialCase/DATALOG-retrieved_at_20150913.csv'
 # define columns we care about for the DATASET files
 # 1 is time, 7 is sensor 2 data, 11 is sensor 4 data
 columns2 = [1, 7, 11]
+headers2 = ['Date/Time','FC67','FDDD']
+# we can use the filepath variables to then import the data, usecols to specify what exact data we're grabbing
 
-#we can use the filepath variables to then import the data, usecols to specify what exact data we're grabbing
 DATASET1 = pd.read_csv(pathDATASET1, usecols=columns2)
 DATASET2 = pd.read_csv(pathDATASET2, usecols=columns2)
 DATASET3 = pd.read_csv(pathDATASET3, usecols=columns2)
@@ -78,8 +100,16 @@ DATASET14 = pd.read_csv(pathDATASET14, usecols=columns2)
 DATASET15 = pd.read_csv(pathDATASET15, usecols=columns2)
 
 # concatenate full dataset together
-dataframes = [DATASET1,DATASET2,DATASET3,DATASET4,DATASET5,DATASET6,DATASET7,DATASET8,DATASET9,DATASET10,DATASET11,DATASET12,DATASET13,DATASET14,DATASET15]
+dataframes = [DATASET1, DATASET2, DATASET3, DATASET4, DATASET5, DATASET6, DATASET7, DATASET8, DATASET9, DATASET10,
+              DATASET11, DATASET12, DATASET13, DATASET14, DATASET15]
 fullDATASET = np.concatenate(dataframes)
+# convert back into pandas dataframe
+fullDATASETFrame = pd.DataFrame(fullDATASET)
+# convert into a csv file we can use in other files
+fullFC67TempDataFrame.to_csv('FC67_Temp_Data.csv',columns=headers2)
 
-#fullDATASETtime = time.strftime(fullDATASET[0,:])
-#print(fullDATASET)
+# convert all timestamps in each file into unix timestamps
+
+FC67RH = np.loadtxt("FC67_Rh_Data.csv",delimiter=",", dtype=str)
+print(FC67RH[:,1])
+#for line in FC67RH:
