@@ -5,8 +5,8 @@ import statistics as s
 # x in this case is the impedance (Z) and S is the time
 # ^ I don't think that's right I'm gonna double check with Castaneda
 x = []
-#S = (x/817.14) ** (1/-1.284)
-#print(S)
+S = (x/817.14) ** (1/-1.284)
+print(S)
 
 # equation 2-14
 # RH is relative humidity
