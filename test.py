@@ -2,8 +2,6 @@ import numpy as np
 from Initialization import fullFDDDRhData, fullFC67RhData, fullFDDDTempData, fullFC67TempData
 import statistics as s
 import pandas as pd
-<<<<<<< Updated upstream
-=======
 import csv
 
 #initialize data from csv files
@@ -62,26 +60,20 @@ FC67Rh = []
 for col in file:
     #FC67RhTimestamps(col['Date'])
     FC67Rh.append(col['Values'])
->>>>>>> Stashed changes
 
 # equation 3-15
-# x in this case is the impedance (Z) (found in datalog data with the corresponding sensor)
+# x in this case is the impedance (Z) and S is the time
 
-x = []
-S = (x/817.14) ** (1/-1.284)
-print(S)
-
-# equation 2-14
-# RH is relative humidity
-# RHn is relative humidity at the Nth hour
-# avgRHk is average relative humidity at the first hour (so this value should remain the same throughout the program)
 # k is hour one (so like might be 0:00:12 or alternatively 0:30:12)
 # Tkavg is the average temperature through the hour
 ###
+RHFDDD = [fullFDDDRhData]
 RHFDDD = np.array(FDDDRh).astype(float)
 N = len(RHFDDD)
 avgRH_list = []
 for i in range(0,6,N):
+    RHFDDDlist = pd[',Value'].tolist()
+    RHavg = s.mean(RHFDDDlist[i:i + 5])
     values = RHFDDD[i:i + 5]
     RHavg = s.mean(values[i:i + 5])
     avgRH_list.append(RHavg)
@@ -92,7 +84,7 @@ RHFC67 = [fullFC67RhData]
 N = len(RHFC67)
 avgRH_list = []
 for i in range(0,6,N):
-    values = RHFC67[i:i+5]
+    values = RHFC67[i:i + 5]
     RHavg = s.mean(values)
     avgRH_list.append(RHavg)
 RHnFC67 = s.mean(RHFC67[-1:-6])
