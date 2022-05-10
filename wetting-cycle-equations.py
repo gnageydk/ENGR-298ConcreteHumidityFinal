@@ -4,9 +4,7 @@ import statistics as s
 import pandas as pd
 
 # equation 3-15
-# x in this case is the impedance (Z) and S is the time
-# ^ I don't think that's right I'm gonna double check with Castaneda
-
+# x in this case is the impedance (Z) (found in datalog data with the corresponding sensor)
 
 x = []
 S = (x/817.14) ** (1/-1.284)
@@ -32,7 +30,7 @@ RHFC67 = [fullFC67RhData]
 N = len(RHFC67)
 avgRH_list = []
 for i in range(0,6,N):
-    values = RHFC67[i:i + 5]
+    values = RHFC67[i:i+5]
     RHavg = s.mean(values)
     avgRH_list.append(RHavg)
 RHnFC67 = s.mean(RHFC67[-1:-6])
