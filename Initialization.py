@@ -79,7 +79,7 @@ pathDATASET14 = '00000000_SpecialCase/DATALOG-retrieved_at_20150905.csv'
 pathDATASET15 = '00000000_SpecialCase/DATALOG-retrieved_at_20150913.csv'
 
 # define columns we care about for the DATASET files
-# 1 is time, 7 is sensor 2 data, 11 is sensor 4 data
+# 1 is timestamp, 7 is sensor 2 data, 11 is sensor 4 data
 columns2 = [1, 7, 11]
 # we can use the filepath variables to then import the data, usecols to specify what exact data we're grabbing
 
@@ -108,6 +108,7 @@ fullDATASETFrame = pd.DataFrame(fullDATASET)
 # convert into a csv file we can use in other files
 #headers are 'Date/Time','FC67','FDDD'
 fullDATASETFrame.to_csv('Sensor_Impedance_Values.csv')
+
 
 
 
