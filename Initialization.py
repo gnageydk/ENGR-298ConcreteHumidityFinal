@@ -29,15 +29,15 @@ pathFDDD_TEMP = '00000000_SpecialCase/YeRail-FDDD_Temp.csv'
 
 # define the columns2 we care about, column 0 is timestamp column 2 is RH or Temp data
 columns1 = [0, 2]
-headers = ['Date/Time', 'Values']
+headers = ['Date', 'Values']
 # FDDD temp data
 fullFDDDTempData = pd.read_csv(pathFDDD_TEMP, skiprows=20, usecols=columns1)
 # create a new file of just the data we care about because dataframes are difficult to work with
-fullFDDDTempData.to_csv('FDDD_Temp_Data.csv')
+fullFDDDTempData.to_csv('FDDD_Temp_Data.csv', header=headers)
 
 # FDDD rh data
 fullFDDDRhData = pd.read_csv(pathFDDD_RH, skiprows=20, usecols=columns1)
-fullFDDDRhData.to_csv('FDDD_Rh_Data.csv')
+fullFDDDRhData.to_csv('FDDD_Rh_Data.csv', header=headers)
 
 # FC67 temp data
 FC67TempData1 = pd.read_csv(pathFC67_TEMP1, skiprows=20, usecols=columns1)
@@ -49,7 +49,7 @@ fullFC67TempData = np.concatenate(FC67TempFrames)
 # because this is a now a numpy array since we used np.concatenate, we need to use a different method to save it
 # we'll convert it back into a pandas dataframe and then save it as a csv file
 fullFC67TempDataFrame = pd.DataFrame(fullFC67TempData)
-fullFC67TempDataFrame.to_csv('FC67_Temp_Data.csv')
+fullFC67TempDataFrame.to_csv('FC67_Temp_Data.csv', header=headers)
 
 # FC67 rh data
 FC67RhData1 = pd.read_csv(pathFC67_RH1, skiprows=20, usecols=columns1)
@@ -59,7 +59,7 @@ FC67RhData3 = pd.read_csv(pathFC67_RH3, skiprows=20, usecols=columns1)
 FC67RhFrames = [FC67RhData1, FC67RhData2, FC67RhData3]
 fullFC67RhData = np.concatenate(FC67RhFrames)
 fullFC67RhDataFrame = pd.DataFrame(fullFC67RhData)
-fullFC67RhDataFrame.to_csv('FC67_Rh_Data.csv')
+fullFC67RhDataFrame.to_csv('FC67_Rh_Data.csv', header=headers)
 
 # import rest of dataset to extract sensor 2 and sensor 4 data
 pathDATASET1 = '00000000_SpecialCase/DATALOG-retrieved_at_20141207.csv'
@@ -106,8 +106,8 @@ fullDATASET = np.concatenate(dataframes)
 # convert back into pandas dataframe
 fullDATASETFrame = pd.DataFrame(fullDATASET)
 # convert into a csv file we can use in other files
-#headers are 'Date/Time','FC67','FDDD'
-fullDATASETFrame.to_csv('Sensor_Impedance_Values.csv')
+headers2= ['Date','FC67','FDDD']
+fullDATASETFrame.to_csv('Sensor_Impedance_Values.csv', header=headers2)
 
 
 
