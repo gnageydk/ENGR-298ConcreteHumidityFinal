@@ -3,6 +3,7 @@ from Initialization import fullFDDDRhData, fullFC67RhData, fullFDDDTempData, ful
 import statistics as s
 import pandas as pd
 import csv
+import matplotlib.pyplot as plt
 
 #initialize data from csv files
 #initialize impedance values
@@ -72,22 +73,24 @@ RHFDDD = np.array(FDDDRh).astype(float)
 N = len(RHFDDD)
 avgRH_list = []
 for i in range(0,6,N):
-    RHFDDDlist = pd[',Value'].tolist()
-    RHavg = s.mean(RHFDDDlist[i:i + 5])
-    values = RHFDDD[i:i + 5]
-    RHavg = s.mean(values[i:i + 5])
+#    RHFDDDlist = pd[',Value'].tolist()
+#    RHavg = s.mean(RHFDDDlist[i:i + 5])
+    values = RHFDDD[i:i+5]
+    RHavg = np.average(values[i:i+5])
     avgRH_list.append(RHavg)
-RHnFDDD = s.mean(RHFDDD[-1:-6])
-print(RHnFDDD)
+
+RHnFDDD = np.average(RHFDDD[-1:-6])
+
 ###
 RHFC67 = [fullFC67RhData]
+RHFC67 = np.array(FC67Rh).astype(float)
 N = len(RHFC67)
 avgRH_list = []
 for i in range(0,6,N):
-    values = RHFC67[i:i + 5]
-    RHavg = s.mean(values)
+    values = RHFC67[i:i+5]
+    RHavg = np.average(values)
     avgRH_list.append(RHavg)
-RHnFC67 = s.mean(RHFC67[-1:-6])
+RHnFC67 = np.average(RHFC67[-1:-6])
 
 # now that the values that require averages are calculated, we can finally use equ. 2-14
 # equation involves a summation between parameters, which we can use a for loop to do
@@ -95,11 +98,12 @@ RHnFC67 = s.mean(RHFC67[-1:-6])
 # Tk is the temperature at a given hour
 # M is just N in this case to represent the Mth hour
 TkFDDD = [fullFDDDTempData]
+TkFDDD = np.array(FDDDTemp).astype(float)
 M = len(TkFDDD)
 avgTk_list = []
 for i in range(0,6,M):
     values = TkFDDD[i:i+5]
-    Tkavg = s.mean(values)
+    Tkavg = np.average(values)
     avgTk_list.append(Tkavg)
 
 Sum_Function = 0
@@ -111,11 +115,12 @@ for k in range(0,N):
 
 
 TkFC67 = [fullFC67TempData]
+TkFC67 = np.array(FC67Temp).astype(float)
 M = len(TkFC67)
 avgTk_list = []
 for i in range(0,6,M):
     values = TkFC67[i:i+5]
-    Tkavg = s.mean(values)
+    Tkavg = np.average(values)
     avgTk_list.append(Tkavg)
 
 Sum_Function = 0
@@ -125,3 +130,6 @@ for k in range(0,N):
     Sum_Function = (.0156) * (avgRH_list[k]) * (2.54 ** (-0.3502 * k)) / (1 + (Tkavg - 25) / 100)
     RH1 = RHnFDDD - Sum_Function
 
+fig, ax = plt.subplots()
+ax.plot(FC67Rh, FC67RhTimestamps)
+fig.show()
