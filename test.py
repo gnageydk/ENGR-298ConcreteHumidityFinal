@@ -62,9 +62,9 @@ for col in file:
     FC67Rh.append(col['Values'])
 
 # equation 3-15
-# x in this case is the impedance (Z) and S is the time
+# x in this case is the impedance (Z)
 
-# k is hour one (so like might be 0:00:12 or alternatively 0:30:12)
+# k is hour one (so might be 0:00:12 or alternatively 0:30:12)
 # Tkavg is the average temperature through the hour
 ###
 RHFDDD = [fullFDDDRhData]
@@ -125,6 +125,3 @@ for k in range(0,N):
     Sum_Function = (.0156) * (avgRH_list[k]) * (2.54 ** (-0.3502 * k)) / (1 + (Tkavg - 25) / 100)
     RH1 = RHnFDDD - Sum_Function
 
-# RH = RHn - "sum of k=1 through N" * (.0156)*(avgRHk)*(2.54**(-0.3502*k))/(1 + (avgTk - 25)/100)
-
-### I tested the equation to the right of the "sum of..." and it works

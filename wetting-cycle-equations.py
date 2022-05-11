@@ -2,8 +2,6 @@ import numpy as np
 from Initialization import fullFDDDRhData, fullFC67RhData, fullFDDDTempData, fullFC67TempData
 import statistics as s
 import pandas as pd
-<<<<<<< Updated upstream
-=======
 import csv
 
 #initialize data from csv files
@@ -62,7 +60,6 @@ FC67Rh = []
 for col in file:
     #FC67RhTimestamps(col['Date'])
     FC67Rh.append(col['Values'])
->>>>>>> Stashed changes
 
 # equation 3-15
 # x in this case is the impedance (Z) (found in datalog data with the corresponding sensor)
