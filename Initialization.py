@@ -6,16 +6,6 @@ import pandas as pd
 import datetime
 import csv
 
-# here is how we can convert a timestamp into a unix time
-# see https://www.geeksforgeeks.org/how-to-convert-datetime-to-unix-timestamp-in-python/amp/
-# and https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
-# for overall documentation on what everything means
-date_example = "6/20/15 12:04:01 PM"
-# %month/%day/%year %Hour:%Minute:%Seconds %pM & AM
-date_format = "%m/%d/%y %H:%M:%S %p"
-timestamp_format = datetime.datetime.strptime(date_example, date_format)
-unix_time = datetime.datetime.timestamp(timestamp_format)
-
 # we care about Sensor 2 (FC67) and Sensor 4 (FDDD)
 # initialize the datasets, define a path to each dataset, so then we can extract it
 pathFC67_RH1 = '00000000_SpecialCase/20141221_NoRail_FC67_RH.csv'
@@ -106,7 +96,7 @@ fullDATASET = np.concatenate(dataframes)
 # convert back into pandas dataframe
 fullDATASETFrame = pd.DataFrame(fullDATASET)
 # convert into a csv file we can use in other files
-headers2= ['Date','FC67','FDDD']
+headers2 = ['Date', 'FC67', 'FDDD']
 fullDATASETFrame.to_csv('Sensor_Impedance_Values.csv', header=headers2)
 
 
