@@ -8,7 +8,7 @@ in order to look into what might cause the deterioration of concrete.
 
 water-cycle-edquations used to write equations and solve for variables as well as plot graphs. Initialization used to parse through files given from sensors.
 
-Packages used: numpy, statistics, pandas, matplotlib
+Packages used: numpy & matplotlib
 
 Walkthrough: Files loaded into script for parsing, equations written with important variables labelled and answers stored into empty list. Used matpoltlib to graph
 values against time, which were values given from separate .csv file.
